@@ -1,0 +1,37 @@
+[
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": ""
+    }
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": ""
+      },
+      {
+        "type": "mrkdwn",
+        "text": ""
+      },
+      {
+        "type": "mrkdwn",
+        "text": ""
+      },
+      {
+        "type": "mrkdwn",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": ""
+    }
+  }
+]
