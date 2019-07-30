@@ -91,7 +91,7 @@ def run():
         headers=headers
     )
 
-    # res = urllib.request.urlopen(req)
+    res = urllib.request.urlopen(req)
 
     return
 
