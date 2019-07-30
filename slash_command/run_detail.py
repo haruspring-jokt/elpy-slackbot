@@ -25,6 +25,12 @@ def run():
 
     content = json.loads(res.read().decode('utf8'))
 
+    # 公開範囲が全員または準じるグループではない場合終了する
+    # 限定グループの場合はPublicチャンネルに表示してはいけないため
+    if content["scope"] != "everyone" and content['groups'][0]['name'] != os.environ["DOCBASE_ALL_USER_GROUP"]:
+        logging.warning(f"private memo isn't able to be opened!")
+        return
+
     # Block kitのガラを用意する
     skeleton = open("./block_detail_skeleton.json", "r")
     block = json.load(skeleton)
@@ -68,7 +74,7 @@ def run():
 
     headers = {
         "Content-Type": "application/json; charset=UTF-8",
-        "Authorization": "Bearer {0}".format(os.environ["SLACK_BOT_USER_ACCESS_TOKEN"])
+        "Authorization": f"Bearer {os.environ['SLACK_BOT_USER_ACCESS_TOKEN']}"
     }
 
     data = {
@@ -79,13 +85,13 @@ def run():
     }
 
     req = urllib.request.Request(
-        url,
+        post_url,
         data=json.dumps(data).encode("utf-8"),
         method="POST",
         headers=headers
     )
 
-    res = urllib.request.urlopen(req)
+    # res = urllib.request.urlopen(req)
 
     return
 
