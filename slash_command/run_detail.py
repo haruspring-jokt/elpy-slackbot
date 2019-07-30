@@ -27,7 +27,8 @@ def run():
 
     # 公開範囲が全員または準じるグループではない場合終了する
     # 限定グループの場合はPublicチャンネルに表示してはいけないため
-    if content["scope"] != "everyone" and content['groups'][0]['name'] != os.environ["DOCBASE_ALL_USER_GROUP"]:
+    if content["scope"] != "everyone" \
+            and content['groups'][0]['name'] != os.environ["DOCBASE_ALL_USER_GROUP"]:
         logging.warning(f"private memo isn't able to be opened!")
         return
 
@@ -39,27 +40,30 @@ def run():
     # title
     block[0]["text"]["text"] = f"*<{content['url']}|{content['title']}>*"
 
-    # group
-    if content["scope"] == "everyone":
-        block[1]["fields"][0]["text"] = f"*group:*\n全員"
-    else:
-        block[1]["fields"][0]["text"] = f"*group:*\n{content['groups'][0]['name']}"
-
     # tags
     tags = ""
     for i, tag in enumerate(content["tags"]):
         tags += content["tags"][i]["name"] + ", "
         if i == len(content["tags"]) - 1:
             tags = tags[:-2]
-    block[1]["fields"][1]["text"] = f"*Tags:*\n{tags}"
+    block[1]["fields"][0]["text"] = f"*Tags:*\n{tags}"
 
     # created at
     created_at = content["created_at"][0:10] + \
         " " + content["created_at"][11:16]
-    block[1]["fields"][2]["text"] = f"*Created at:*\n{created_at}"
+    block[1]["fields"][1]["text"] = f"*Created at:*\n{created_at}"
 
     # author
-    block[1]["fields"][3]["text"] = f"*Author:*\n{content['user']['name']}"
+    block[1]["fields"][2]["text"] = f"*Author:*\n{content['user']['name']}"
+
+    # comment
+    block[1]["fields"][3]["text"] = f"*Comment:*\n{len(content['comments'])}"
+
+    # good
+    block[1]["fields"][4]["text"] = f"*Good jobs:*\n{content['good_jobs_count']}"
+
+    # star
+    block[1]["fields"][5]["text"] = f"*Stars count:*\n{content['stars_count']}"
 
     # overview
     if len(content["body"]) <= 200:
